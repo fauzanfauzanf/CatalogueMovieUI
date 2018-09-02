@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".feature.detail_movie.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="120dp"
+                android:id="@+id/movie_poster_detail"
+                android:src="@mipmap/play"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
+                android:layout_toEndOf="@+id/movie_poster_detail"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/movie_poster_detail">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="This is the title of the Movie"
+                    android:id="@+id/item_title_detail"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/item_rating_detial"
+                    android:textColor="@color/white"
+                    tools:text="Rating : 7.9/10"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/item_date_detail"
+                    android:textColor="@color/white"
+                    tools:text="Release Date : Sunday, 21 April 2018"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <!--<include layout="@layout/detail_info"/>-->
+        <!--<include layout="@layout/detail_overview"/>-->
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:elevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overview"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="4dp"
+                    android:id="@+id/item_title"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/detail_overview_tv"
+                    tools:text="Test test ini infonya"
+                    android:layout_marginLeft="6dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
