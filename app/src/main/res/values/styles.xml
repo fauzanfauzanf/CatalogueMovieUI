@@ -26,4 +26,9 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="toggleButton">
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+
 </resources>

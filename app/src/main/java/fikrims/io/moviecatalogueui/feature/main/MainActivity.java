@@ -17,9 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.orhanobut.hawk.Hawk;
+
 import fikrims.io.moviecatalogueui.R;
+import fikrims.io.moviecatalogueui.feature.main.favorite.FavoriteFragment;
 import fikrims.io.moviecatalogueui.feature.main.home.HomeFragment;
 import fikrims.io.moviecatalogueui.feature.search.SearchResultActivity;
+import fikrims.io.moviecatalogueui.utils.Constant;
 
 import static fikrims.io.moviecatalogueui.utils.Constant.Utils.INTENT_SEARCH;
 
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(0);
+
+        Hawk.init(this).build();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -133,10 +139,14 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         String title = "";
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
+        if (id == R.id.nav_home){
+            Hawk.put(Constant.Key.ACTIVITY_STATUS, 1);
             title = getResources().getString(R.string.app_name);
             fragment = new HomeFragment();
+        } else if ( id == R.id.nav_favorite ){
+            Hawk.put(Constant.Key.ACTIVITY_STATUS, 3);
+            title = getResources().getString(R.string.favorite);
+            fragment = new FavoriteFragment();
         } else if (id == R.id.nav_setting) {
             title = getResources().getString(R.string.app_name);
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
@@ -156,5 +166,11 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle(title);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Hawk.put(Constant.Key.ACTIVITY_STATUS, 1);
     }
 }

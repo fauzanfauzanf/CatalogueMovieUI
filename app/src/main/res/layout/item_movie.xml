@@ -36,13 +36,13 @@
                     android:id="@+id/text_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:textStyle="bold"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:text="Movie_Title" />
 
                 <TextView
@@ -50,15 +50,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginRight="8dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:ellipsize="end"
                     android:maxLines="8"
                     tools:text="Movie_Title" />
 
+
+                <Button
+                    android:id="@+id/btn_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end|bottom"
+                    android:background="@color/colorAccent"
+                    android:text="@string/remove"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"

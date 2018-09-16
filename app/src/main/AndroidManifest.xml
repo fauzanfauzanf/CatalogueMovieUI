@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fikrims.io.moviecatalogueui">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,12 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.detail_movie.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".feature.main.MainActivity"/>
-        <activity android:name=".feature.search.SearchResultActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".feature.main.MainActivity"/>
+        <activity
+            android:name=".feature.detail_movie.DetailActivity"
+            android:parentActivityName=".feature.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".feature.search.SearchResultActivity"
+            android:parentActivityName=".feature.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
