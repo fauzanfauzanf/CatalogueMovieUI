@@ -34,6 +34,17 @@ public class MovieHelper {
         databaseHelper.close();
     }
 
+    public boolean getDataStatus(long id){
+        boolean status = false;
+
+        Cursor cursor = database.rawQuery("select * from " + FAVORITE + " where " + DatabaseHelper.FIELD_ID + "="+id, null);
+
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) status = true;
+        cursor.close();
+        return status;
+    }
+
     @SuppressLint("Recycle")
     public List<MovieResult> getFavoriteMovie(){
         MovieResult movieResult;

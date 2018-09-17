@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private MovieHelper movieHelper;
     private MovieResult movie;
+    private boolean status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +66,14 @@ public class DetailActivity extends AppCompatActivity {
 
     void updateUI(MovieResult movie){
 //        getSupportActionBar().setTitle(movie.getTitle());
+        movieHelper.open();
+        status = movieHelper.getDataStatus(movie.getId());
+        if (status) toggleButton.setChecked(true);
+        else toggleButton.setChecked(false);
+        movieHelper.close();
+
         int status = Hawk.get(Constant.Key.ACTIVITY_STATUS);
-        if (status == 3) toggleButton.setVisibility(View.GONE);
+
         Picasso.with(this)
                 .load(Constant.Utils.BASE_POSTER_URL+movie.getPosterPath())
                 .placeholder(R.mipmap.play)
@@ -96,14 +103,14 @@ public class DetailActivity extends AppCompatActivity {
 
     @OnCheckedChanged({R.id.toggleButton})
     void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-        int status = Hawk.get(Constant.Key.ACTIVITY_STATUS);
+//        int status = Hawk.get(Constant.Key.ACTIVITY_STATUS);
         int id = buttonView.getId();
         movie = getIntent().getParcelableExtra(Constant.Utils.MOVIE_DETAIL);
         movieHelper.open();
         switch (id){
             case R.id.toggleButton:
                 if (isChecked){
-                    if (status != 3) Toast.makeText(DetailActivity.this,"Add to Favorite", Toast.LENGTH_LONG).show();
+                    if (!status) Toast.makeText(DetailActivity.this,"Add to Favorite", Toast.LENGTH_LONG).show();
                     movieHelper.insert(movie, 1);
                     movieHelper.close();
                 } else {
