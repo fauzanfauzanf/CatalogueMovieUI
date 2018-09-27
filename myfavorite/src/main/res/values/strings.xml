@@ -2,4 +2,5 @@
     <string name="app_name">My Favorite</string>
     <string name="remove">remove</string>
     <string name="favorite">FavoriteMovie</string>
+    <string name="overview">Text Description</string>
 </resources>

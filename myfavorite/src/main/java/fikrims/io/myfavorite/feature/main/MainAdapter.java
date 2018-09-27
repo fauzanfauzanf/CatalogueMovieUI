@@ -1,6 +1,7 @@
 package fikrims.io.myfavorite.feature.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fikrims.io.myfavorite.R;
 import fikrims.io.myfavorite.data.provider.FavoriteModel;
+import fikrims.io.myfavorite.feature.detail_movie.DetailActivity;
+import fikrims.io.myfavorite.utils.Constant;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
@@ -83,9 +86,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     .into(imageMovie);
 
             itemView.setOnClickListener(view -> {
-                /*Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.setData(Uri.parse(CONTENT_URI + "/" + item.getId()));
-                itemView.getContext().startActivity(intent);*/
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                intent.putExtra(Constant.Key.MOVIE_DETAIL, item);
+                itemView.getContext().startActivity(intent);
             });
         }
     }

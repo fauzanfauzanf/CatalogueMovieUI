@@ -7,6 +7,8 @@
 package fikrims.io.myfavorite.data.provider;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -26,7 +28,7 @@ import static fikrims.io.myfavorite.data.provider.DatabaseContract.getColumnStri
  * Created by omrobbie on 11/11/2017.
  */
 
-public class FavoriteModel {
+public class FavoriteModel implements Parcelable {
     @SerializedName("id")
     private int id;
 
@@ -50,6 +52,29 @@ public class FavoriteModel {
 
     @SerializedName("status")
     private int status;
+
+    protected FavoriteModel(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        backdropPath = in.readString();
+        posterPath = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+        overview = in.readString();
+        status = in.readInt();
+    }
+
+    public static final Creator<FavoriteModel> CREATOR = new Creator<FavoriteModel>() {
+        @Override
+        public FavoriteModel createFromParcel(Parcel in) {
+            return new FavoriteModel(in);
+        }
+
+        @Override
+        public FavoriteModel[] newArray(int size) {
+            return new FavoriteModel[size];
+        }
+    };
 
     public void setId(int id) {
         this.id = id;
@@ -142,5 +167,22 @@ public class FavoriteModel {
                         ",overview = '" + overview + '\'' +
                         "status = '" + status + '\'' +
                         "}";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(backdropPath);
+        dest.writeString(posterPath);
+        dest.writeString(releaseDate);
+        dest.writeDouble(voteAverage);
+        dest.writeString(overview);
+        dest.writeInt(status);
     }
 }
