@@ -6,11 +6,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fikrims.io.moviecatalogueui.data.model.response.MovieResult;
+
+import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.CONTENT_URI;
 
 public class MovieHelper {
 
@@ -57,7 +60,7 @@ public class MovieHelper {
             do {
                 movieResult = new MovieResult();
 
-                movieResult.setId(cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_ID)));
+                movieResult.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_ID)));
                 movieResult.setPosterPath(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_POSTER)));
                 movieResult.setBackdropPath(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_BACKDROP_PATH)));
                 movieResult.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.FIELD_TITLE)));
@@ -84,10 +87,15 @@ public class MovieHelper {
         contentValues.put(DatabaseHelper.FIELD_VOTE_AVERAGE, movieResult.getVoteAverage());
         contentValues.put(DatabaseHelper.FIELD_STATUS, status);
 
-        database.insert(FAVORITE, null, contentValues);
+        context.getContentResolver().insert(CONTENT_URI, contentValues);
+//        database.insert(FAVORITE, null, contentValues);
     }
 
     public void delete(long id) {
-        database.delete(FAVORITE, DatabaseHelper.FIELD_ID + " = '" + id + "'", null);
+//        database.delete(FAVORITE, DatabaseHelper.FIELD_ID + " = '" + id + "'", null);
+        context.getContentResolver().delete(Uri.parse(CONTENT_URI + "/" + id),
+                null,
+                null
+        );
     }
 }

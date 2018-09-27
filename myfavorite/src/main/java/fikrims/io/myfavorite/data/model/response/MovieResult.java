@@ -1,7 +1,6 @@
 
-package fikrims.io.moviecatalogueui.data.model.response;
+package fikrims.io.myfavorite.data.model.response;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,18 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.provider.BaseColumns._ID;
-import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnDouble;
-import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnInt;
-import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnString;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_BACKDROP;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_OVERVIEW;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_POSTER;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_RELEASE_DATE;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_STATUS;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_TITLE;
-import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_VOTE;
 
 public class MovieResult implements Parcelable {
 
@@ -31,7 +18,7 @@ public class MovieResult implements Parcelable {
     @SerializedName("genre_ids")
     private List<Long> mGenreIds;
     @SerializedName("id")
-    private int mId;
+    private Long mId;
     @SerializedName("original_language")
     private String mOriginalLanguage;
     @SerializedName("original_title")
@@ -52,8 +39,6 @@ public class MovieResult implements Parcelable {
     private Double mVoteAverage;
     @SerializedName("vote_count")
     private Long mVoteCount;
-    @SerializedName("status")
-    private int status;
 
     public Boolean getAdult() {
         return mAdult;
@@ -79,11 +64,11 @@ public class MovieResult implements Parcelable {
         mGenreIds = genreIds;
     }
 
-    public int getId() {
+    public Long getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         mId = id;
     }
 
@@ -167,14 +152,6 @@ public class MovieResult implements Parcelable {
         mVoteCount = voteCount;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -206,7 +183,7 @@ public class MovieResult implements Parcelable {
         this.mBackdropPath = in.readString();
         this.mGenreIds = new ArrayList<Long>();
         in.readList(this.mGenreIds, Long.class.getClassLoader());
-        this.mId = (int) in.readValue(int.class.getClassLoader());
+        this.mId = (Long) in.readValue(Long.class.getClassLoader());
         this.mOriginalLanguage = in.readString();
         this.mOriginalTitle = in.readString();
         this.mOverview = in.readString();
@@ -230,36 +207,4 @@ public class MovieResult implements Parcelable {
             return new MovieResult[size];
         }
     };
-
-    public MovieResult(Cursor cursor) {
-        this.mId = getColumnInt(cursor, _ID);
-        this.mTitle = getColumnString(cursor, COLUMN_TITLE);
-        this.mBackdropPath = getColumnString(cursor, COLUMN_BACKDROP);
-        this.mPosterPath = getColumnString(cursor, COLUMN_POSTER);
-        this.mReleaseDate = getColumnString(cursor, COLUMN_RELEASE_DATE);
-        this.mVoteAverage = getColumnDouble(cursor, COLUMN_VOTE);
-        this.mOverview = getColumnString(cursor, COLUMN_OVERVIEW);
-        this.status = getColumnInt(cursor, COLUMN_STATUS);
-    }
-
-    @Override
-    public String toString() {
-        return
-                "ResultsItem{" +
-                        "overview = '" + mOverview + '\'' +
-                        ",original_language = '" + mOriginalLanguage + '\'' +
-                        ",original_title = '" + mOriginalTitle + '\'' +
-                        ",video = '" + mVideo + '\'' +
-                        ",title = '" + mTitle + '\'' +
-                        ",genre_ids = '" + mGenreIds + '\'' +
-                        ",poster_path = '" + mPosterPath + '\'' +
-                        ",backdrop_path = '" + mBackdropPath + '\'' +
-                        ",release_date = '" + mReleaseDate + '\'' +
-                        ",vote_average = '" + mVoteAverage + '\'' +
-                        ",popularity = '" + mPopularity + '\'' +
-                        ",id = '" + mId + '\'' +
-                        ",adult = '" + mAdult + '\'' +
-                        ",vote_count = '" + mVoteCount + '\'' +
-                        "}";
-    }
 }
