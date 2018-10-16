@@ -1,8 +1,8 @@
 package fikrims.io.moviecatalogueui.feature.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -23,6 +23,7 @@ import fikrims.io.moviecatalogueui.R;
 import fikrims.io.moviecatalogueui.feature.main.favorite.FavoriteFragment;
 import fikrims.io.moviecatalogueui.feature.main.home.HomeFragment;
 import fikrims.io.moviecatalogueui.feature.search.SearchResultActivity;
+import fikrims.io.moviecatalogueui.feature.settings.SettingsActivity;
 import fikrims.io.moviecatalogueui.utils.Constant;
 
 import static fikrims.io.moviecatalogueui.utils.Constant.Utils.INTENT_SEARCH;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(0);
+
+        context = MainActivity.this;
 
         Hawk.init(this).build();
 
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null){
             setFragment(new HomeFragment(), getResources().getString(R.string.home));
         }
+
     }
 
     @Override
@@ -149,8 +154,9 @@ public class MainActivity extends AppCompatActivity
             fragment = new FavoriteFragment();
         } else if (id == R.id.nav_setting) {
             title = getResources().getString(R.string.app_name);
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
+            startActivity(new Intent(context, SettingsActivity.class));
+            /*Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(mIntent);*/
         }
 
         setFragment(fragment, title);

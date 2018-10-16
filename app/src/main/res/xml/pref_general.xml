@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/action_settings">
+
+        <Preference
+            android:key="@string/key_setting_locale"
+            android:summary="@string/label_setting_locale_summary"
+            android:title="@string/label_setting_locale_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

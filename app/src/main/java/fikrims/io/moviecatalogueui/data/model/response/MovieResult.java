@@ -10,11 +10,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.BaseColumns._ID;
 import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnDouble;
 import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnInt;
 import static fikrims.io.moviecatalogueui.data.provider.DatabaseContract.getColumnString;
 import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_BACKDROP;
+import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_ID;
 import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_OVERVIEW;
 import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_POSTER;
 import static fikrims.io.moviecatalogueui.data.provider.FavoriteColumns.COLUMN_RELEASE_DATE;
@@ -232,7 +232,7 @@ public class MovieResult implements Parcelable {
     };
 
     public MovieResult(Cursor cursor) {
-        this.mId = getColumnInt(cursor, _ID);
+        this.mId = getColumnInt(cursor, COLUMN_ID);
         this.mTitle = getColumnString(cursor, COLUMN_TITLE);
         this.mBackdropPath = getColumnString(cursor, COLUMN_BACKDROP);
         this.mPosterPath = getColumnString(cursor, COLUMN_POSTER);
