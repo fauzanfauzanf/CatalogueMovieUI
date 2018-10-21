@@ -3,6 +3,8 @@ package fikrims.io.moviecatalogueui.feature.main.NowMovie;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,6 +23,8 @@ import fikrims.io.moviecatalogueui.R;
 import fikrims.io.moviecatalogueui.data.model.response.MovieResult;
 import fikrims.io.moviecatalogueui.data.remote.BaseApiService;
 import fikrims.io.moviecatalogueui.data.remote.UtilsApi;
+
+import static fikrims.io.moviecatalogueui.utils.Constant.Key.KEY_MOVIES;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,7 @@ public class NowMovieFragment extends Fragment implements NowMoviePresenter.NowM
     private NowMoviePresenter nowMoviePresenter;
     private Context context;
     private int columns;
+    private List<MovieResult> movies = new ArrayList<>();
 
     public NowMovieFragment() {
         // Required empty public constructor
@@ -51,7 +57,7 @@ public class NowMovieFragment extends Fragment implements NowMoviePresenter.NowM
         context = getContext();
         mApiService = UtilsApi.getAPIService(context);
         nowMoviePresenter = new NowMoviePresenter(context, mApiService, this);
-        nowMoviePresenter.doMovie();
+
         initView();
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -66,6 +72,15 @@ public class NowMovieFragment extends Fragment implements NowMoviePresenter.NowM
 
         });
 
+        if (savedInstanceState == null) {
+            nowMoviePresenter.doMovie();
+        } else {
+            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
+            nowMovieAdapter.setMovieResult(movies);
+            listMovie.setAdapter(nowMovieAdapter);
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
         return view;
     }
 
@@ -79,8 +94,15 @@ public class NowMovieFragment extends Fragment implements NowMoviePresenter.NowM
 
     @Override
     public void getMovie(List<MovieResult> list) {
+        movies = list;
         nowMovieAdapter.setMovieResult(list);
         listMovie.setAdapter(nowMovieAdapter);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(KEY_MOVIES, (ArrayList<? extends Parcelable>) movies);
+        super.onSaveInstanceState(outState);
     }
 }

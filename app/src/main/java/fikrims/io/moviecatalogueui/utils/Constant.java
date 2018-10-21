@@ -3,6 +3,8 @@ package fikrims.io.moviecatalogueui.utils;
 public interface Constant {
     class Key{
         public final static String ACTIVITY_STATUS = "status";
+        public final static String KEY_MOVIES = "movies_now";
+        public final static String KEY_MOVIES_UPCOMING = "movies_upcoming";
     }
 
     class Utils{

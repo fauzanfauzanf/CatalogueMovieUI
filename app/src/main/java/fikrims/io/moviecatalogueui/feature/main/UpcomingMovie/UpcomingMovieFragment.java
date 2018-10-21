@@ -3,6 +3,8 @@ package fikrims.io.moviecatalogueui.feature.main.UpcomingMovie;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,6 +23,8 @@ import fikrims.io.moviecatalogueui.R;
 import fikrims.io.moviecatalogueui.data.model.response.MovieResult;
 import fikrims.io.moviecatalogueui.data.remote.BaseApiService;
 import fikrims.io.moviecatalogueui.data.remote.UtilsApi;
+
+import static fikrims.io.moviecatalogueui.utils.Constant.Key.KEY_MOVIES_UPCOMING;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,7 @@ public class UpcomingMovieFragment extends Fragment implements UpcomingMoviePres
     private UpcomingMoviePresenter upcomingMoviePresenter;
     private Context context;
     private int columns;
+    private List<MovieResult> movies = new ArrayList<>();
 
     public UpcomingMovieFragment() {
         // Required empty public constructor
@@ -51,8 +57,17 @@ public class UpcomingMovieFragment extends Fragment implements UpcomingMoviePres
         context = getContext();
         mApiService = UtilsApi.getAPIService(context);
         upcomingMoviePresenter = new UpcomingMoviePresenter(context, mApiService, this);
-        upcomingMoviePresenter.doMovieUpcoming();
+
         initView();
+
+        if (savedInstanceState == null) {
+            upcomingMoviePresenter.doMovieUpcoming();
+        } else {
+            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES_UPCOMING);
+            upcomingMovieAdapter.setMovieResult(movies);
+            listMovie.setAdapter(upcomingMovieAdapter);
+            swipeRefreshLayout.setRefreshing(false);
+        }
 
         return view;
     }
@@ -79,6 +94,7 @@ public class UpcomingMovieFragment extends Fragment implements UpcomingMoviePres
 
     @Override
     public void getMovie(List<MovieResult> list) {
+        movies = list;
         upcomingMovieAdapter.setMovieResult(list);
         listMovie.setAdapter(upcomingMovieAdapter);
         swipeRefreshLayout.setRefreshing(false);
@@ -87,5 +103,11 @@ public class UpcomingMovieFragment extends Fragment implements UpcomingMoviePres
     @Override
     public void error(Throwable throwable) {
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(KEY_MOVIES_UPCOMING, (ArrayList<? extends Parcelable>) movies);
+        super.onSaveInstanceState(outState);
     }
 }
